@@ -5,6 +5,7 @@ from discord.ext import tasks
 import feedparser
 import asyncio
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 TOKEN = os.getenv("TOKEN")
 CHANNEL_ID = 1472955412172243017  
@@ -28,7 +29,7 @@ def get_news():
 
 @tasks.loop(minutes=1)
 async def daily_news():
-    now = datetime.now()
+    now = datetime.now(ZoneInfo("Asia/Seoul"))
 
     if now.hour == 9 and now.minute == 0:
         channel = await client.fetch_channel(CHANNEL_ID)
